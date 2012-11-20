@@ -64,6 +64,8 @@ class Tests_Post_Formats extends WP_UnitTestCase {
 		$this->assertNotInstanceOf( 'WP_Error', $result );
 		$this->assertInternalType( 'array', $result );
 		$this->assertEquals( 0, count( $result ) );
+
+		remove_post_type_support( 'page', 'post-formats' );
 	}
 
 	function test_has_format() {
