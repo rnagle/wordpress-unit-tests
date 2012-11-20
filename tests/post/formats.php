@@ -31,9 +31,11 @@ class Tests_Post_Formats extends WP_UnitTestCase {
 		$this->assertNotInstanceOf( 'WP_Error', $result );
 		$this->assertInternalType( 'array', $result );
 		$this->assertEquals( 0, count( $result ) );
-		//debug_log( var_export( $result, true ) );
 	}
 
+	/**
+	 * @ticket 22473
+	 */
 	function test_set_get_post_format_for_page() {
 		$post_id = $this->factory->post->create( array( 'post_type' => 'page' ) );
 
