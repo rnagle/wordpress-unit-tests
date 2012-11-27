@@ -176,6 +176,35 @@ class Tests_Term extends WP_UnitTestCase {
 
 	}
 
+	/**
+	 * @ticket 22560
+	 */
+	function test_object_term_cache() {
+		$post_id = $this->factory->post->create();
+
+		$terms_1 = array('foo', 'bar', 'baz');
+		$terms_2 = array('bar', 'bing');
+
+		// Cache should be empty after a set.
+		$tt_1 = wp_set_object_terms( $post_id, $terms_1, $this->taxonomy );
+		$this->assertEquals( 3, count($tt_1) );
+		$this->assertFalse( wp_cache_get( $post_id, $this->taxonomy . '_relationships') );
+
+		// wp_get_object_terms() does not prime the cache.
+		wp_get_object_terms( $post_id, $this->taxonomy, array('fields' => 'names', 'orderby' => 't.term_id') );
+		$this->assertFalse( wp_cache_get( $post_id, $this->taxonomy . '_relationships') );
+
+		// get_the_terms() does prime the cache.
+		$terms = get_the_terms( $post_id, $this->taxonomy );
+		$cache = wp_cache_get( $post_id, $this->taxonomy . '_relationships');
+		$this->assertInternalType( 'array', $cache );
+
+		// Cache should be empty after a set.
+		$tt_2 = wp_set_object_terms( $post_id, $terms_2, $this->taxonomy );
+		$this->assertEquals( 2, count($tt_2) );
+		$this->assertFalse( wp_cache_get( $post_id, $this->taxonomy . '_relationships') );
+	}
+
 	function test_change_object_terms_by_id() {
 		// set some terms on an object; then change them while leaving one intact
 
