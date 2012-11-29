@@ -560,6 +560,8 @@ class Tests_User_Capabilities extends WP_UnitTestCase {
 		register_post_type( 'foobar', array( 'capability_type' => array( 'foobar', 'foobars' ) ) );
 		$cap = get_post_type_object( 'foobar' )->cap;
 
+		$this->assertEquals( 'edit_foobars', $cap->create_posts );
+
 		$this->assertFalse($admin->has_cap( $cap->create_posts ));
 		$this->assertFalse($author->has_cap( $cap->create_posts ));
 		$this->assertFalse($editor->has_cap( $cap->create_posts ));
@@ -576,6 +578,15 @@ class Tests_User_Capabilities extends WP_UnitTestCase {
 		$this->assertFalse($contributor->has_cap( $cap->create_posts ));
 
 		_unregister_post_type( 'foobar' );
+
+		$cap = get_post_type_object( 'attachment' )->cap;
+		$this->assertEquals( 'upload_files', $cap->create_posts );
+		$this->assertEquals( 'edit_posts', $cap->edit_posts );
+
+		$this->assertTrue( $author->has_cap( $cap->create_posts ) );
+		$this->assertTrue( $author->has_cap( $cap->edit_posts ) );
+		$this->assertTrue( $contributor->has_cap( $cap->edit_posts ) );
+		$this->assertFalse( $contributor->has_cap( $cap->create_posts ) );
 	}
 
 	function test_page_meta_caps() {
