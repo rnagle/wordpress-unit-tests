@@ -44,4 +44,20 @@ class Tests_XMLRPC_wp_getRevisions extends WP_XMLRPC_UnitTestCase {
 		$this->assertInternalType( 'array', $result );
 		$this->assertCount( 1, $result );
 	}
+
+	/**
+	 * @ticket 22687
+	 */
+	function test_revision_count_for_auto_draft_post_creation() {
+		$this->make_user_by_role( 'editor' );
+
+		$post_id = $this->myxmlrpcserver->wp_newPost( array( 1, 'editor', 'editor', array(
+			'post_title' => 'Original title',
+			'post_content' => 'Test'
+		) ) );
+
+		$result = $this->myxmlrpcserver->wp_getRevisions( array( 1, 'editor', 'editor', $post_id ) );
+		$this->assertCount( 0, $result );
+	}
+
 }
