@@ -9,10 +9,6 @@ define( 'ABSPATH', dirname( __FILE__ ) . '/wordpress/' );
 // Force known bugs: (previously -f)
 // define( 'WP_TESTS_FORCE_KNOWN_BUGS', true );
 
-// error_reporting() level.
-// If not set, test suite disables E_STRICT and E_DEPRECATED.
-// define( 'WP_TESTS_ERROR_REPORTING', error_reporting() );
-
 // Test with WordPress debug mode on (previously -d)
 // define( 'WP_DEBUG', true );
 

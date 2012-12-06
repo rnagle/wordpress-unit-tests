@@ -24,12 +24,6 @@ if ( !is_readable( $config_file_path ) ) {
 }
 require_once $config_file_path;
 
-if ( defined( 'WP_TESTS_ERROR_REPORTING' ) ) {
-	error_reporting( WP_TESTS_ERROR_REPORTING );
-} else {
-	error_reporting( E_ALL & ~E_DEPRECATED & ~E_STRICT );
-}
-
 define( 'DIR_TESTDATA', dirname( __FILE__ ) . '/../data' );
 
 if ( ! defined( 'WP_TESTS_FORCE_KNOWN_BUGS' ) )
