@@ -3,7 +3,6 @@
  * Installs WordPress for running the tests and loads WordPress and the test libraries
  */
 
-error_reporting( E_ALL & ~E_DEPRECATED & ~E_STRICT );
 
 require_once 'PHPUnit/Autoload.php';
 
@@ -24,6 +23,12 @@ if ( !is_readable( $config_file_path ) ) {
 	die( "ERROR: wp-tests-config.php is missing! Please use wp-tests-config-sample.php to create a config file.\n" );
 }
 require_once $config_file_path;
+
+if ( defined( 'WP_TESTS_ERROR_REPORTING' ) ) {
+	error_reporting( WP_TESTS_ERROR_REPORTING );
+} else {
+	error_reporting( E_ALL & ~E_DEPRECATED & ~E_STRICT );
+}
 
 define( 'DIR_TESTDATA', dirname( __FILE__ ) . '/../data' );
 
