@@ -11,7 +11,7 @@ class Tests_HTTP_Functions extends WP_UnitTestCase {
 		$response = wp_remote_head( $url );
 		$headers = wp_remote_retrieve_headers( $response );
 
-		$this->assertTrue( is_array( $headers ) );
+		$this->assertInternalType( 'array', $headers, "Reply wasn't array." );
 		$this->assertEquals( 'image/jpeg', $headers['content-type'] );
 		$this->assertEquals( '40148', $headers['content-length'] );
 		$this->assertEquals( '200', wp_remote_retrieve_response_code( $response ) );
@@ -26,10 +26,10 @@ class Tests_HTTP_Functions extends WP_UnitTestCase {
 
 	function test_head_404() {
 		$url = 'http://asdftestblog1.files.wordpress.com/2007/09/awefasdfawef.jpg';
-		$response = wp_remote_head( $url );
+		$headers = wp_remote_head( $url );
 
-		$this->assertTrue( is_array($response) );
-		$this->assertEquals( '404', wp_remote_retrieve_response_code( $response ) );
+		$this->assertInternalType( 'array', $headers, "Reply wasn't array." );
+		$this->assertEquals( '404', wp_remote_retrieve_response_code( $headers ) );
 	}
 
 	function test_get_request() {
@@ -39,7 +39,7 @@ class Tests_HTTP_Functions extends WP_UnitTestCase {
 		$headers = wp_get_http($url, $file);
 
 		// should return the same headers as a head request
-		$this->assertTrue( is_array($headers) );
+		$this->assertInternalType( 'array', $headers, "Reply wasn't array." );
 		$this->assertEquals( 'image/jpeg', $headers['content-type'] );
 		$this->assertEquals( '40148', $headers['content-length'] );
 		$this->assertEquals( '200', $headers['response'] );
@@ -57,7 +57,7 @@ class Tests_HTTP_Functions extends WP_UnitTestCase {
 		$headers = wp_get_http($url, $file);
 
 		// should return the same headers as a head request
-		$this->assertTrue( is_array($headers) );
+		$this->assertInternalType( 'array', $headers, "Reply wasn't array." );
 		$this->assertEquals( 'image/jpeg', $headers['content-type'] );
 		$this->assertEquals( '40148', $headers['content-length'] );
 		$this->assertEquals( '200', $headers['response'] );
