@@ -646,4 +646,25 @@ class Tests_User_Capabilities extends WP_UnitTestCase {
 		$this->assertNotEmpty( $user->caps );
 		$this->assertEquals( $caps, $user->caps );
 	}
+
+	function test_current_user_can_for_blog() {
+		$user = new WP_User( $this->factory->user->create( array( 'role' => 'administrator' ) ) );
+		$old_uid = get_current_user_id();
+		set_current_user( $user->ID );
+
+		$this->assertTrue( current_user_can_for_blog( get_current_blog_id(), 'edit_posts' ) );
+		$this->assertFalse( current_user_can_for_blog( get_current_blog_id(), 'foo_the_bar' ) );
+		if ( ! is_multisite() ) {
+			$this->assertTrue( current_user_can_for_blog( 12345, 'edit_posts' ) );
+			return;
+		}
+
+		$this->assertFalse( current_user_can_for_blog( 12345, 'edit_posts' ) );
+
+		$blog_id = $this->factory->blog->create( array( 'user_id' => $user->ID ) );
+		$this->assertTrue( current_user_can_for_blog( $blog_id, 'edit_posts' ) );
+		$this->assertFalse( current_user_can_for_blog( $blog_id, 'foo_the_bar' ) );
+
+		set_current_user( $old_uid );
+	}
 }
