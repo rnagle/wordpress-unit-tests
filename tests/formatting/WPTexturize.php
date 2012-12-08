@@ -172,4 +172,11 @@ class Tests_Formatting_WPTexturize extends WP_UnitTestCase {
 		$this->assertEquals('&nbsp;&#8220;Testing&#8221;', wptexturize('&nbsp;"Testing"'));
 		$this->assertEquals('&#38;&#8220;Testing&#8221;', wptexturize('&#38;"Testing"'));
 	}
+
+	/**
+	 * @ticket 22823
+	 */
+	function test_apostrophes_before_primes() {
+		$this->assertEquals( 'WordPress 3.5&#8217;s release date', wptexturize( "WordPress 3.5's release date" ) );
+	}
 }
