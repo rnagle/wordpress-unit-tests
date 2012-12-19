@@ -1,8 +1,8 @@
 <?php
 
-class Tests_POMO_Translation_Entry extends WP_UnitTestCase {
+class Tests_POMO_TranslationEntry extends WP_UnitTestCase {
 
-    function test_create_entry() {
+	function test_create_entry() {
 		// no singular => empty object
 		$entry = new Translation_Entry();
 		$this->assertNull($entry->singular);
