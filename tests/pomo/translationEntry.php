@@ -1,6 +1,6 @@
 <?php
 
-class WP_Test_Translation_Entry extends WP_UnitTestCase {
+class Tests_POMO_Translation_Entry extends WP_UnitTestCase {
 
     function test_create_entry() {
 		// no singular => empty object

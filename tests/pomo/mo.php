@@ -1,6 +1,6 @@
 <?php
 
-class WP_Test_MO extends WP_UnitTestCase {
+class Tests_POMO_MO extends WP_UnitTestCase {
 
 	function test_mo_simple() {
 		$mo = new MO();

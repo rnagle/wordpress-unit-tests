@@ -1,6 +1,6 @@
 <?php
 
-class WP_Test_PO extends WP_UnitTestCase {
+class Tests_POMO_PO extends WP_UnitTestCase {
 	function setUp() {
 		require_once ABSPATH . '/wp-includes/pomo/po.php';
 		// not so random wordpress.pot string -- multiple lines

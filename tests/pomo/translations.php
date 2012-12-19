@@ -1,5 +1,5 @@
 <?php
-class WP_Test_Translations extends WP_UnitTestCase {
+class Tests_POMO_Translations extends WP_UnitTestCase {
 
 	function test_add_entry() {
 		$entry = new Translation_Entry(array('singular' => 'baba',));

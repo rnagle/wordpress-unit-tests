@@ -1,6 +1,6 @@
 <?php
 
-class WP_Test_NOOP_Translations extends WP_UnitTestCase {
+class Tests_POMO_NOOPTranslations extends WP_UnitTestCase {
 	function setUp() {
 		parent::setUp();
 		$this->noop = new NOOP_Translations;
