@@ -4,7 +4,7 @@ class WP_Test_MO extends WP_UnitTestCase {
 
 	function test_mo_simple() {
 		$mo = new MO();
-		$mo->import_from_file('data/pomo/simple.mo');
+		$mo->import_from_file(DIR_TESTDATA . '/pomo/simple.mo');
 		$this->assertEquals(array('Project-Id-Version' => 'WordPress 2.6-bleeding', 'Report-Msgid-Bugs-To' => 'wp-polyglots@lists.automattic.com'), $mo->headers);
 		$this->assertEquals(2, count($mo->entries));
 		$this->assertEquals(array('dyado'), $mo->entries['baba']->translations);
@@ -13,7 +13,7 @@ class WP_Test_MO extends WP_UnitTestCase {
 
 	function test_mo_plural() {
 		$mo = new MO();
-		$mo->import_from_file('data/pomo/plural.mo');
+		$mo->import_from_file(DIR_TESTDATA . '/pomo/plural.mo');
 		$this->assertEquals(1, count($mo->entries));
 		$this->assertEquals(array("oney dragoney", "twoey dragoney", "manyey dragoney", "manyeyey dragoney", "manyeyeyey dragoney"), $mo->entries["one dragon"]->translations);
 
@@ -40,7 +40,7 @@ class WP_Test_MO extends WP_UnitTestCase {
 
 	function test_mo_context() {
 		$mo = new MO();
-		$mo->import_from_file('data/pomo/context.mo');
+		$mo->import_from_file(DIR_TESTDATA . '/pomo/context.mo');
 		$this->assertEquals(2, count($mo->entries));
 		$plural_entry = new Translation_Entry(array('singular' => 'one dragon', 'plural' => '%d dragons', 'translations' => array("oney dragoney", "twoey dragoney","manyey dragoney"), 'context' => 'dragonland'));
 		$this->assertEquals($plural_entry, $mo->entries[$plural_entry->key()]);
@@ -113,7 +113,7 @@ class WP_Test_MO extends WP_UnitTestCase {
 
 	function test_nplurals_with_backslashn() {
 		$mo = new MO();
-		$mo->import_from_file('data/pomo/bad_nplurals.mo');
+		$mo->import_from_file(DIR_TESTDATA . '/pomo/bad_nplurals.mo');
 		$this->assertEquals('%d foro', $mo->translate_plural('%d forum', '%d forums', 1));
 		$this->assertEquals('%d foros', $mo->translate_plural('%d forum', '%d forums', 2));
 		$this->assertEquals('%d foros', $mo->translate_plural('%d forum', '%d forums', -1));
@@ -122,7 +122,7 @@ class WP_Test_MO extends WP_UnitTestCase {
 	function disabled_test_performance() {
 		$start = microtime(true);
 		$mo = new MO();
-		$mo->import_from_file('data/pomo/de_DE-2.8.mo');
+		$mo->import_from_file(DIR_TESTDATA . '/pomo/de_DE-2.8.mo');
 		// echo "\nPerformance: ".(microtime(true) - $start)."\n";
 	}
 
@@ -131,13 +131,13 @@ class WP_Test_MO extends WP_UnitTestCase {
 		// that's why we are skipping it the stupid way
 		if ((ini_get("mbstring.func_overload") & 2) != 0) {
 			$mo = new MO();
-			$mo->import_from_file('data/pomo/overload.mo');
+			$mo->import_from_file(DIR_TESTDATA . '/pomo/overload.mo');
 			$this->assertEquals(array('Табло'), $mo->entries['Dashboard']->translations);
 		}
 	}
 
 	function test_load_pot_file() {
 		$mo = new MO();
-		$this->assertEquals( false, $mo->import_from_file('data/pomo/mo.pot') );
+		$this->assertEquals( false, $mo->import_from_file(DIR_TESTDATA . '/pomo/mo.pot') );
 	}
 }
