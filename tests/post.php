@@ -581,4 +581,18 @@ class Tests_Post extends WP_UnitTestCase {
 
 		kses_remove_filters();
 	}
+
+	/**
+	 * @ticket 22883
+	 */
+	function test_get_page_uri_with_stdclass_post_object() {
+		$post_id    = $this->factory->post->create( array( 'post_name' => 'get-page-uri-post-name' ) );
+
+		// Mimick an old stdClass post object, missing the ancestors field.
+		$post_array = (object) get_post( $post_id, ARRAY_A );
+		unset( $post_array->ancestors );
+
+		// Dummy assertion. If this test fails, it will actually error out on an E_WARNING.
+		$this->assertEquals( 'get-page-uri-post-name', get_page_uri( $post_array ) );
+	}
 }
