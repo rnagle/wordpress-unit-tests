@@ -88,6 +88,16 @@ class Tests_Post_Objects extends WP_UnitTestCase {
 		$this->assertEquals( array(), get_post_ancestors( get_post( $parent_id ) ) );
 	}
 
+	/**
+	 * @ticket 22882
+	 */
+	function test_get_post_ancestors_with_falsey_values() {
+		foreach ( array( null, 0, false, '0', '' ) as $post_id ) {
+			$this->assertInternalType( 'array', get_post_ancestors( $post_id ) );
+			$this->assertEquals( array(), get_post_ancestors( $post_id ) );
+		}
+	}
+
 	function test_get_post_category_property() {
 		$post_id = $this->factory->post->create();
 		$post = get_post( $post_id );
