@@ -593,4 +593,17 @@ class Tests_User extends WP_UnitTestCase {
 		$this->assertEquals( 1, $counts[$user_id_a] );
 		$this->assertEquals( 1, $counts[$user_id_b] );
 	}
+
+	/**
+	 * @ticket 22858
+	 */
+	function test_wp_update_user_on_nonexistent_users() {
+		$user_id = 1;
+		// Find me a non-existent user ID.
+		while ( get_userdata( $user_id ) )
+			++$user_id;
+
+		// If this test fails, it will error out for calling the to_array() method on a non-object.
+		$this->assertInstanceOf( 'WP_Error', wp_update_user( array( 'ID' => $user_id ) ) );
+	}
 }
