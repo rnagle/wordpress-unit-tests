@@ -520,4 +520,65 @@ class Tests_Post extends WP_UnitTestCase {
 
 		$this->assertEquals( 'publish', $post->post_status );
 	}
+
+	/**
+	 * @ticket 22944
+	 */
+	function test_wp_insert_post_and_wp_publish_post_with_future_date() {
+		$future_date = gmdate( 'Y-m-d H:i:s', time() + 10000000 );
+		$post_id = $this->factory->post->create( array(
+			'post_status' => 'publish',
+			'post_date' => $future_date,
+		) );
+
+		$post = get_post( $post_id );
+		$this->assertEquals( 'future', $post->post_status );
+		$this->assertEquals( $future_date, $post->post_date );
+
+		wp_publish_post( $post_id );
+		$post = get_post( $post_id );
+
+		$this->assertEquals( 'publish', $post->post_status );
+		$this->assertEquals( $future_date, $post->post_date );
+	}
+
+	/**
+	 * @ticket 22944
+	 */
+	function test_publish_post_with_content_filtering() {
+		kses_remove_filters();
+
+		$post_id = wp_insert_post( array( 'post_title' => '<script>Test</script>' ) );
+		$post = get_post( $post_id );
+		$this->assertEquals( '<script>Test</script>', $post->post_title );
+		$this->assertEquals( 'draft', $post->post_status );
+
+		kses_init_filters();
+
+		wp_update_post( array( 'ID' => $post->ID, 'post_status' => 'publish' ) );
+		$post = get_post( $post->ID );
+		$this->assertEquals( 'Test', $post->post_title );
+
+		kses_remove_filters();
+	}
+
+	/**
+	 * @ticket 22944
+	 */
+	function test_wp_publish_post_and_avoid_content_filtering() {
+		kses_remove_filters();
+
+		$post_id = wp_insert_post( array( 'post_title' => '<script>Test</script>' ) );
+		$post = get_post( $post_id );
+		$this->assertEquals( '<script>Test</script>', $post->post_title );
+		$this->assertEquals( 'draft', $post->post_status );
+
+		kses_init_filters();
+
+		wp_publish_post( $post->ID );
+		$post = get_post( $post->ID );
+		$this->assertEquals( '<script>Test</script>', $post->post_title );
+
+		kses_remove_filters();
+	}
 }
