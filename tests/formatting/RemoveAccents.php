@@ -79,4 +79,19 @@ class Tests_Formatting_RemoveAccents extends WP_UnitTestCase {
 		// unmarked
 		$this->assertEquals( 'aaeiouuAEIOUU', remove_accents( 'aɑeiouüAEIOUÜ' ) );
 	}
+
+	function _remove_accents_germanic_umlauts_cb() {
+		return 'de_DE';
+	}
+
+	/**
+	 * @ticket 3782
+	 */
+	public function test_remove_accents_germanic_umlauts() {
+		add_filter( 'locale', array( $this, '_remove_accents_germanic_umlauts_cb' ) );
+
+		$this->assertEquals( 'aeoeuess', remove_accents( 'äöüß' ) );
+
+		remove_filter( 'locale', array( $this, '_remove_accents_germanic_umlauts_cb' ) );
+	}
 }
