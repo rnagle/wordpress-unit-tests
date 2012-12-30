@@ -90,7 +90,7 @@ class Tests_Formatting_RemoveAccents extends WP_UnitTestCase {
 	public function test_remove_accents_germanic_umlauts() {
 		add_filter( 'locale', array( $this, '_remove_accents_germanic_umlauts_cb' ) );
 
-		$this->assertEquals( 'AEOEUEaeoeuess', remove_accents( 'ÄÖÜäöüß' ) );
+		$this->assertEquals( 'AeOeUeaeoeuess', remove_accents( 'ÄÖÜäöüß' ) );
 
 		remove_filter( 'locale', array( $this, '_remove_accents_germanic_umlauts_cb' ) );
 	}
