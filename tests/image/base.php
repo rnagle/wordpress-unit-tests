@@ -30,4 +30,21 @@ abstract class WP_Image_UnitTestCase extends WP_UnitTestCase {
 	public function setEngine( $editors ) {
 		return array( $this->editor_engine );
 	}
+
+	/**
+	 * Helper assertion for testing alpha on images
+	 * 
+	 * @param  string $image_path
+	 * @param  array $point      array(x,y)
+	 * @param  int $alpha
+	 */
+	protected function assertImageAlphaAtPoint( $image_path, $point, $alpha ) {
+
+		$im = imagecreatefrompng( $image_path );
+		$rgb = imagecolorat($im, $point[0], $point[1]);
+
+		$colors = imagecolorsforindex($im, $rgb);
+
+		$this->assertEquals( $alpha, $colors['alpha'] );
+	}
 }
