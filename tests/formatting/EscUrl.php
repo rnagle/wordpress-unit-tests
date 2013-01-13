@@ -35,6 +35,14 @@ class Tests_Formatting_EscUrl extends WP_UnitTestCase {
 		$this->assertEquals('', esc_url('nasty://example.com/'));
 	}
 
+	/**
+	 * @ticket 23187
+	 */
+	function test_protocol_case() {
+		$this->assertEquals('http://example.com', esc_url('HTTP://example.com'));
+		$this->assertEquals('http://example.com', esc_url('Http://example.com'));
+	}
+
 	function test_display_extras() {
 		$this->assertEquals('http://example.com/&#039;quoted&#039;', esc_url('http://example.com/\'quoted\''));
 		$this->assertEquals('http://example.com/\'quoted\'', esc_url('http://example.com/\'quoted\'',null,'notdisplay'));
