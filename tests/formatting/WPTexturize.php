@@ -179,4 +179,19 @@ class Tests_Formatting_WPTexturize extends WP_UnitTestCase {
 	function test_apostrophes_before_primes() {
 		$this->assertEquals( 'WordPress 3.5&#8217;s release date', wptexturize( "WordPress 3.5's release date" ) );
 	}
+
+	/**
+	 * @ticket 23185
+	 */
+	function test_spaces_around_hyphens() {
+		$this->assertEquals( ' &#8211; ', wptexturize( ' - ' ) ); 
+		$this->assertEquals( '&nbsp;&#8211;&nbsp;', wptexturize( '&nbsp;-&nbsp;' ) );
+		$this->assertEquals( ' &#8211;&nbsp;', wptexturize( ' -&nbsp;' ) );
+		$this->assertEquals( '&nbsp;&#8211; ', wptexturize( '&nbsp;- ') );
+
+		$this->assertEquals( ' &#8212; ', wptexturize( ' -- ' ) ); 
+		$this->assertEquals( '&nbsp;&#8212;&nbsp;', wptexturize( '&nbsp;--&nbsp;' ) );
+		$this->assertEquals( ' &#8212;&nbsp;', wptexturize( ' --&nbsp;' ) );
+		$this->assertEquals( '&nbsp;&#8212; ', wptexturize( '&nbsp;-- ') );
+	}
 }
