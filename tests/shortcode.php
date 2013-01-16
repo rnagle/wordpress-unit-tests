@@ -297,6 +297,9 @@ EOF;
 		$this->assertEquals( '', $this->content );
 	}
 
+	/**
+	 * @ticket 14050
+	 */
 	function test_shortcode_unautop() {
 		// a blank line is added at the end, so test with it already there
 		$test_string = "[footag]\n";
