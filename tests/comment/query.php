@@ -91,15 +91,30 @@ class Tests_Comment_Query extends WP_UnitTestCase {
 		add_comment_meta( $comment_id2, 'key2', 'value2', true );
 		add_comment_meta( $comment_id3, 'key3', 'value3', true );
 
+		$comments = get_comments( array( 'meta_key' => 'key', 'orderby' => array( 'key' ) ) );
+		$this->assertEquals( 2, count( $comments ) );
+		$this->assertEquals( $comment_id2, $comments[0]->comment_ID );
+		$this->assertEquals( $comment_id, $comments[1]->comment_ID );
+
 		$comments = get_comments( array( 'meta_key' => 'key', 'orderby' => array( 'meta_value' ) ) );
 		$this->assertEquals( 2, count( $comments ) );
 		$this->assertEquals( $comment_id2, $comments[0]->comment_ID );
 		$this->assertEquals( $comment_id, $comments[1]->comment_ID );
 
+		$comments = get_comments( array( 'meta_key' => 'key', 'orderby' => array( 'key' ), 'order' => 'ASC' ) );
+		$this->assertEquals( 2, count( $comments ) );
+		$this->assertEquals( $comment_id, $comments[0]->comment_ID );
+		$this->assertEquals( $comment_id2, $comments[1]->comment_ID );
+
 		$comments = get_comments( array( 'meta_key' => 'key', 'orderby' => array( 'meta_value' ), 'order' => 'ASC' ) );
 		$this->assertEquals( 2, count( $comments ) );
 		$this->assertEquals( $comment_id, $comments[0]->comment_ID );
 		$this->assertEquals( $comment_id2, $comments[1]->comment_ID );
+
+		$comments = get_comments( array( 'meta_value' => 'value3', 'orderby' => array( 'key' ) ) );
+		$this->assertEquals( 2, count( $comments ) );
+		$this->assertEquals( $comment_id, $comments[0]->comment_ID );
+		$this->assertEquals( $comment_id3, $comments[1]->comment_ID );
 
 		$comments = get_comments( array( 'meta_value' => 'value3', 'orderby' => array( 'meta_value' ) ) );
 		$this->assertEquals( 2, count( $comments ) );
@@ -108,9 +123,12 @@ class Tests_Comment_Query extends WP_UnitTestCase {
 
 		// value1 is present on two different keys for $comment_id yet we should get only one instance
 		// of that comment in the results
+		$comments = get_comments( array( 'meta_value' => 'value1', 'orderby' => array( 'key' ) ) );
+		$this->assertEquals( 1, count( $comments ) );
+
 		$comments = get_comments( array( 'meta_value' => 'value1', 'orderby' => array( 'meta_value' ) ) );
 		$this->assertEquals( 1, count( $comments ) );
-        }
+	}
 
 	function test_get_status() {
 		$post_id = $this->factory->post->create();
