@@ -243,6 +243,9 @@ class Tests_Functions extends WP_UnitTestCase {
 			$this->assertFalse( is_serialized($case), "Test data: $case" );
 	}
 
+	/**
+	 * @group add_query_arg
+	 */
 	function test_add_query_arg() {
 		$old_req_uri = $_SERVER['REQUEST_URI'];
 
@@ -296,6 +299,7 @@ class Tests_Functions extends WP_UnitTestCase {
 		}
 
 		$qs_urls = array(
+			'baz=1', // #WP4903
 			'/?baz',
 			'/2012/07/30/?baz',
 			'edit.php?baz',
