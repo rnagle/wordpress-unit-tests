@@ -5,7 +5,6 @@ The short version:
 __________________
 
 1. Initialize the WordPress submodule:
-
     ::
         $ git submodule update --init
 
