@@ -1,15 +1,26 @@
+WordPress Unit Tests
+====================
+
 The short version:
+__________________
 
-1. Create a clean MySQL database and user.  DO NOT USE AN EXISTING DATABASE or you will lose data, guaranteed.
+1. Initialize the WordPress submodule:
 
-2. Copy wp-tests-config-sample.php to wp-tests-config.php, edit it and include your database name/user/password.
+::
+    $ git submodule update --init
 
-3. $ svn up
+2. Create a clean MySQL database and user. DO NOT USE AN EXISTING DATABASE or you will lose data, guaranteed.
 
-4. Run the tests from the "trunk" directory:
+3. Copy wp-tests-config-sample.php to wp-tests-config.php, edit it and include your database name, user and password.
+
+4. Run the tests:
+
    To execute a particular test:
-      $ phpunit tests/test_case.php
+   ::
+       $ phpunit tests/test_case.php
+
    To execute all tests:
+   ::
       $ phpunit
 
 Notes:
