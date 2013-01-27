@@ -1,2 +1,3 @@
 wp-tests-config.php
 build
+data/.trac*
