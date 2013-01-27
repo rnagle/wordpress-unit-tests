@@ -6,8 +6,8 @@ __________________
 
 1. Initialize the WordPress submodule:
 
-::
-    $ git submodule update --init
+    ::
+        $ git submodule update --init
 
 2. Create a clean MySQL database and user. DO NOT USE AN EXISTING DATABASE or you will lose data, guaranteed.
 
