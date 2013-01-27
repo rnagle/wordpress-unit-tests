@@ -5,8 +5,8 @@ The short version:
 __________________
 
 1. Initialize the WordPress submodule:
-    ::
-        $ git submodule update --init
+
+    $ git submodule update --init
 
 2. Create a clean MySQL database and user. DO NOT USE AN EXISTING DATABASE or you will lose data, guaranteed.
 
@@ -14,15 +14,16 @@ __________________
 
 4. Run the tests:
 
-   To execute a particular test:
-   ::
-       $ phpunit tests/test_case.php
+    To execute a particular test:
 
-   To execute all tests:
-   ::
-      $ phpunit
+    $ phpunit tests/test_case.php
+
+    To execute all tests:
+
+    $ phpunit
 
 Notes:
+______
 
 Test cases live in the 'tests' subdirectory.  All files in that directory will be included by default.  Extend the WP_UnitTestCase class to ensure your test is run.
 
@@ -31,3 +32,4 @@ phpunit will initialize and install a (more or less) complete running copy of Wo
 Changes to the test database will be rolled back as tests are finished, to ensure a clean start next time the tests are run.
 
 phpunit is intended to run at the command line, not via a web server.
+
