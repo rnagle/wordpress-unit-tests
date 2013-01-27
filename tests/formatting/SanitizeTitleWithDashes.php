@@ -97,11 +97,4 @@ class Tests_Formatting_SanitizeTitleWithDashes extends WP_UnitTestCase {
 		$this->assertEquals("aaaa", sanitize_title_with_dashes("āáǎà", '', 'save'));
 	}
 
-	/**
-	 * @ticket 22395
-	 */
-	function test_replaces_acute_accents() {
-		$this->assertEquals("aaaa", sanitize_title_with_dashes("ááa´aˊ", '', 'save'));
-	}
-
 }
